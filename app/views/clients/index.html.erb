@@ -1,0 +1,18 @@
+<div class='row pad-up-20'>
+<h3><%= current_admin.email %></h3><h6 class='subheader show-for-small'>
+<%= link_to 'sign out', destroy_admin_session_path, :method => 'delete', :class => 'button [alert alert alert]' %></h6>
+<hr>
+
+<table class='responsive table'>
+	<thead>
+		<tr><th>client</th><th>status</th></tr>
+	</thead>
+	<% @clients.each do |client| %>
+		<tr>
+			<td><%= client.email %></td><td><%= client.confirmed? %></td>
+		</tr>
+	<% end %>
+</table>
+
+
+</div>

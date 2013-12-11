@@ -1,0 +1,97 @@
+<div class='home-header'>
+<section id="homepage-intro">
+<div class='row'>
+	<div class="small-12 colums">
+
+		 <%= render 'layouts/messages' %>
+	</div>
+	<div class="medium-6 large-7 columns">
+		<h1>Activemenu</h1><br>
+		<h3>The most advanced open <br class="hide-for-small">platform to run your restaurant menu.</h3>
+		<br>
+	</div>
+</div>
+
+
+<div class='row'>
+	<form action="/home" method="post" data-remote="true" data-abide>
+		<div class='large-6 columns'>
+			<div class="row collapse">
+				<div class="small-10 columns">
+					<input type="email" name='email' placeholder="submit your@email.com to" required>
+					<small class="error">A valid email address is required</small>
+				</div>
+				<%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
+				<div class="small-2 columns">
+					<button type="submit" class="button postfix">Follow</button>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
+
+<div class='row'>
+	<div class="medium-7 large-6 columns">
+		<h6 id="thank-you-div"></h6>
+	</div>
+	
+</div>
+
+</section>
+
+</div>
+<div class='home-action'>
+	<div class='row'>
+		<div class='large-3 columns'>
+		<a href="#" data-reveal-id="step_one" class="button [tiny small small] [ alert ]">Why Activemenu</a></div>
+		<div class='large-9 columns easy'>Sign up to follow, we won't spam you.</div>
+	</div>
+</div>
+
+<div class='row centered-text pad-up-20 pad-down-20'>
+	<div class="large-12 columns">
+		<h2>Get your online menu right the first time, for any screen</h2><h4 class='subheader'>Responsive, active, simple, and nothing for users to install.</h4>
+	</div>
+	
+	<div class="large-12 columns"><%= image_tag "responsive.svg", :size => "150x150" %></div>
+	<div class="small-12 columns pad-up-20 show-for-small">Welcome to mobile view, touch the menu icon at the top.</div>
+</div>
+
+<div class='home-mid centered-text show-for-medium-up'><div class='row'><h3 class>Check back or follow us for the latest updates.<h3></div></div>
+
+
+
+<div id="step_one" class="reveal-modal" data-reveal>
+	<h2>Out of the box.</h2>
+	<p class="lead">Accept orders for pickup or delivery - prepaid or not, compute delivery distances, dine in reservations, order dashboard, social media integration with OmniAuth (connect your menu with a simple OmniAuth login, e.g. Facebook&trade;), order status notifications with email and SMS, mobile web app included.</p>
+	<p>Choose any hosting provider you like or use Activemenu deployment guides to verified providers with complete solutions starting at $10 a month.</p>
+	<a data-no-turbolink href="#" data-reveal-id="step_two" class="button">More</a>
+	<a data-no-turbolink class="close-reveal-modal">&#215;</a>
+</div>
+
+<div id="step_two" class="reveal-modal"  data-reveal>
+	<h2>Not a plugin, a framework.</h2>
+	<p class="lead">Activemenu is not a CMS plugin, it is a platform designed to do one thing, bring your menu alive and online.</p>
+	<p>Designed from ground up to be one thing, a mobile, web, and an interactive ordering experience for your restaurant patrons.  Use out of the box as a complete solution or
+		extend and customize to your liking.  Open source with many flexible deployment options, start small and grow as you need.</p>
+	<!-- <a href="#" data-reveal-id="step_two" class="button">More Reasons?</a> -->
+	<a data-no-turbolink href="#" data-reveal-id="step_three" class="button">A Bit More</a>
+	<a data-no-turbolink class="close-reveal-modal">&#215;</a>
+</div>
+<div id="step_three" class="reveal-modal"  data-reveal>
+	<h2>Active Menu</h2>
+	<p class="lead">Because static menus are so yesterday.</p>
+	<p>Have you menu adjust based on the day of the week or time of day, keep track of open or delivery hours.  Connect with your social media presence and turn it into a selling tool, not just a news feed.  Make changes at will and have them instantly reflected in your menu.  Use it as a web and mobile presence and turn it into an interactive dine in ordering experience, possibilities are endless.</p>
+	<!-- <a href="#" data-reveal-id="step_two" class="button">More Reasons?</a> -->
+	<a data-no-turbolink href="#" data-reveal-id="step_four" class="button">Just One More</a>
+	<a data-no-turbolink class="close-reveal-modal">&#215;</a>
+</div>
+<div id="step_four" class="reveal-modal"  data-reveal>
+	<h2>Responsive design.</h2>
+	<p class="lead">Smartphone, tablet, or laptop, we got you covered.  </p><p>Activemenu uses Foundation, in our humble opinion the best open source responsive
+		framework.  Tweak your look and feel as much or as little as you want, from experts to novices.  We love the yeti!  So sign up to get updated when we release this beast into the wild, it's an open source MIT license, basically do as you will.</p>
+
+	<div class="centered-text"><%= image_tag "yeti.jpg", :size => "150x150" %></div>
+	<!-- <div class="centered-text"><%= image_tag "foundation-build.svg", :size => "200x200" %></div> -->
+	<a data-no-turbolink class="close-reveal-modal">&#215;</a>
+</div>

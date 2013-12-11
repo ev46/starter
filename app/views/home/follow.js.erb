@@ -1,0 +1,5 @@
+<% if @client.present? %>
+	$("#thank-you-div").html("We sent you a confirmation link, we do this to avoid unwanted messages to your mailbox.");
+<% else %>
+	$("#thank-you-div").html('You are already following us, thank you.');
+<% end %>

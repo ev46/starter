@@ -1,5 +1,8 @@
 require File.expand_path('../boot', __FILE__)
 
+# Load application ENV vars and merge with existing ENV vars. Loaded here so can use values in initializers.
+#ENV.update YAML.load_file('config/application.yml')[Rails.env] rescue {}
+
 # Pick the frameworks you want:
 require "active_record/railtie"
 require "action_controller/railtie"
@@ -10,6 +13,8 @@ require "sprockets/railtie"
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
 Bundler.require(:default, Rails.env)
+
+
 
 module Activemenu
   class Application < Rails::Application
@@ -24,5 +29,8 @@ module Activemenu
     # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :de
+
+
+
   end
 end

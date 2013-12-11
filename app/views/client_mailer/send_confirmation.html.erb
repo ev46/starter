@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+  </head>
+  <body>
+    <h1>Thank you for following activemenu!</h1>
+    <p>
+      Thank you for your interest in activemenu, we promise not to send you any unwanted correspondance and only update you on our progress and other exiting news about Activemenu.
+      Follow the link to confirm your email:  <a href="<%= ENV['DOMAIN']%>/confirm?email=<%= @client.email %>&confirmation_token=<%= @client.confirmation_token %>">Confirm Link</a>
+    </p>
+  </body>
+</html>
