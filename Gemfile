@@ -1,5 +1,7 @@
 source 'https://rubygems.org'
 
+#gem 'rails_12factor'
+
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.0.1'
 
@@ -42,6 +44,7 @@ gem 'bcrypt-ruby', '~> 3.1.2'
 group :development, :test do
   gem 'factory_girl_rails'
   gem 'rspec-rails'
+  gem 'capistrano'
 end
 
 # Use unicorn as the app server
