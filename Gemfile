@@ -44,7 +44,8 @@ gem 'bcrypt-ruby', '~> 3.1.2'
 group :development, :test do
   gem 'factory_girl_rails'
   gem 'rspec-rails'
-  gem 'capistrano'
+  gem 'capistrano', '~> 3.1'
+  gem 'capistrano-rails', '~> 1.1'
 end
 
 # Use unicorn as the app server
