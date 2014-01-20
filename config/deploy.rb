@@ -1,5 +1,5 @@
 set :application, 'activemenu'
-set :repo_url, 'git@example.com:ev46/starter.git'
+set :repo_url, 'git@github.com:ev46/starter.git'
 set :user, 'byterover'
 set :user_sudo, false
 set :rails_env, "production"
