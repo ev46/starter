@@ -11,6 +11,10 @@ set :use_sudo, false
 set :stage, :production
 set :rails_env, 'production'
 
+set :ssh_options, {
+  verbose: :debug
+}
+
 # Default branch is :master
 # ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }
 
