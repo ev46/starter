@@ -6,7 +6,7 @@ set :repo_url, 'git@github.com:ev46/starter.git'
 set :branch, :master
 set :user, "deploy"
 set :use_sudo, false
-#set :default_env, { rvm_bin_path: '~/.rvm/bin'}
+set :default_env, { rvm_bin_path: '~/.rvm/bin'}
 
 set :stage, :production
 set :rails_env, 'production'
@@ -34,10 +34,10 @@ set :log_level, :info
 set :pty, true
 
 # Default value for :linked_files is []
-set :linked_files, %w{config/database.yml}
+#set :linked_files, %w{config/database.yml}
 
 # Default value for linked_dirs is []
-set :linked_dirs, %w{bin log tmp vendor/bundle public/system}
+#set :linked_dirs, %w{bin log tmp vendor/bundle public/system}
 
 # Default value for default_env is {}
 # set :default_env, { path: "/opt/ruby/bin:$PATH" }
