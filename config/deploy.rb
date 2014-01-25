@@ -1,12 +1,16 @@
 # config valid only for Capistrano 3.1
-lock '3.1.0'
+#lock '3.1.0'
 
 set :application, 'activemenu'
 set :repo_url, 'git@github.com:ev46/starter.git'
 set :branch, :master
 set :user, "deploy"
 set :use_sudo, false
-set :default_env, { rvm_bin_path: '~/.rvm/bin'}
+
+# setup rvm
+set :rbenv_type, :system
+set :rbenv_ruby, "2.1.0p0"
+#set :default_env, { rvm_bin_path: '~/.rvm/bin'}
 
 set :stage, :production
 set :rails_env, 'production'
