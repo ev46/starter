@@ -19,6 +19,8 @@ set :user, 'deploy'
 
 set :port, '22 -A'
 
+set
+
 # Manually create these paths in shared/ (eg: shared/config/database.yml) in your server.
 # They will be linked in the 'deploy:link_shared_paths' step.
 set :shared_paths, ['config/database.yml', 'log']
@@ -63,6 +65,7 @@ task :deploy => :environment do
     invoke :'bundle:install'
     invoke :'rails:db_migrate'
     invoke :'rails:assets_precompile'
+    invoke :'unicorn_and_nginx'
 
     to :launch do
       queue "touch #{deploy_to}/tmp/restart.txt"
@@ -76,4 +79,12 @@ end
 #  - http://nadarei.co/mina/tasks
 #  - http://nadarei.co/mina/settings
 #  - http://nadarei.co/mina/helpers
+
+task :unicorn_and_nginx do
+  queue! "#{file_exists('/etc/nginx/nginx.conf.save')} || sudo mv /etc/nginx/nginx.conf /etc/nginx/nginx.conf.save"
+ 
+  queue! "#{file_exists('/etc/nginx/nginx.conf')} || sudo ln -nfs #{deploy_to}/current/config/nginx.conf /etc/nginx/nginx.conf"
+ 
+  queue! "#{file_exists('/etc/init.d/unicorn_avalon.sh')} || sudo ln -nfs #{deploy_to}/current/scripts/unicorn.sh /etc/init.d/unicorn_myapp.sh"
+end
 
