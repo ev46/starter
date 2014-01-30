@@ -21,10 +21,10 @@ development:
 production:
   adapter: postgresql
   encoding: unicode
-  database: activemenu_prod
+  database: activemenu_production
   pool: 5
   username: deploy
-  password:
+  password: deploy
 
 
 

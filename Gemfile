@@ -47,11 +47,9 @@ group :development, :test do
   
 end
 
-gem 'capistrano', '~> 3.1'
-gem 'capistrano-rails', '~> 1.1.0'
-gem 'capistrano-bundler'
-gem 'capistrano-rvm'
-
+group :production do
+	gem 'unicorn'
+end
 # Use unicorn as the app server
 #gem 'unicorn'
 
