@@ -1,10 +1,3 @@
-# Sample verbose configuration file for Unicorn (not Rack)
-#
-# This configuration file documents many features of Unicorn
-# that may not be needed for some applications. See
-# http://unicorn.bogomips.org/examples/unicorn.conf.minimal.rb
-# for a much simpler configuration file.
-#
 # See http://unicorn.bogomips.org/Unicorn/Configurator.html for complete
 # documentation.
  
@@ -12,7 +5,7 @@ app_root = File.expand_path("../..", __FILE__)
  
 # Use at least one worker per core if you're on a dedicated server,
 # more will usually help for _short_ waits on databases/caches.
-worker_processes 4
+worker_processes 2
  
 # Since Unicorn is never exposed to outside clients, it does not need to
 # run on the standard HTTP port (80), there is no reason to start Unicorn
