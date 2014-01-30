@@ -10,17 +10,14 @@ require 'mina/rvm'    # for rvm support. (http://rvm.io)
 #   repository   - Git repo to clone from. (needed by mina/git)
 #   branch       - Branch name to deploy. (needed by mina/git)
 
+set :app, 'activemenu'
 set :domain, 'activemenu.org'
-set :deploy_to, '/home/deploy'
+set :deploy_to, '/home/deploy/activemenu'
 set :repository, 'git@github.com:ev46/starter.git'
 set :branch, 'master'
 
 set :user, 'deploy'
-
 set :port, '22 -A'
-
-set
-
 # Manually create these paths in shared/ (eg: shared/config/database.yml) in your server.
 # They will be linked in the 'deploy:link_shared_paths' step.
 set :shared_paths, ['config/database.yml', 'log']
@@ -29,6 +26,10 @@ set :rvm_path, '/usr/local/rvm/bin/rvm'
 # Optional settings:
 #   set :user, 'foobar'    # Username in the server to SSH to.
 #   set :port, '30000'     # SSH port number.
+
+set :app_path, "#{deploy_to}/#{current_path}"
+set :unicorn_config, "#{app_path}/config/unicorn.rb"
+set :unicorn_pid, "#{app_path}/tmp/pids/unicorn.pid"
 
 # This task is the environment that is loaded for most commands, such as
 # `mina deploy` or `mina rake`.
@@ -48,12 +49,17 @@ task :setup => :environment do
   queue! %[mkdir -p "#{deploy_to}/shared/log"]
   queue! %[chmod g+rx,u+rwx "#{deploy_to}/shared/log"]
 
+  queue! %[mkdir -p "#{deploy_to}/shared/tmp/{pids,sockets}"]
+  queue! %[chmod g+rx,u+rwx "#{deploy_to}/shared/tmp/{pids,sockets}"]
+
   queue! %[mkdir -p "#{deploy_to}/shared/config"]
   queue! %[chmod g+rx,u+rwx "#{deploy_to}/shared/config"]
 
   queue! %[touch "#{deploy_to}/shared/config/database.yml"]
   queue  %[echo "-----> Be sure to edit 'shared/config/database.yml'."]
 end
+
+
 
 desc "Deploys the current version to the server."
 task :deploy => :environment do
@@ -65,21 +71,55 @@ task :deploy => :environment do
     invoke :'bundle:install'
     invoke :'rails:db_migrate'
     invoke :'rails:assets_precompile'
-    invoke :'unicorn_and_nginx'
+    #invoke :'unicorn_and_nginx'
 
     to :launch do
-      queue "touch #{deploy_to}/tmp/restart.txt"
+      #queue "touch #{deploy_to}/tmp/restart.txt"
+      invoke :'unicorn:restart'
     end
   end
+end
 
-  task :unicorn_and_nginx do
-    queue! "#{file_exists('/etc/nginx/nginx.conf.save')} || sudo mv /etc/nginx/nginx.conf /etc/nginx/nginx.conf.save"
+#                                                                       Unicorn
+# ==============================================================================
+namespace :unicorn do
+#                                                                    Start task
+# ------------------------------------------------------------------------------
+  desc "Start unicorn"
+  task :start => :environment do
+    queue 'echo "-----> Start Unicorn"'
+    queue! %{
+      cd #{app_path}
+      RAILS_ENV=production bundle exec unicorn_rails -c #{unicorn_config} -D
+    }
+  end
  
-    queue! "#{file_exists('/etc/nginx/nginx.conf')} || sudo ln -nfs #{deploy_to}/current/config/nginx.conf /etc/nginx/nginx.conf"
+#                                                                     Stop task
+# ------------------------------------------------------------------------------
+  desc "Stop unicorn"
+  task :stop do
+    queue 'echo "-----> Stop Unicorn"'
+    queue! %{
+      test -s #{unicorn_pid} && kill -QUIT `cat "#{unicorn_pid}"` && echo "\tStop Ok" && exit 0
+      echo >&2 "\tNot running"
+    }
+  end
  
-    queue! "#{file_exists('/etc/init.d/unicorn_avalon.sh')} || sudo ln -nfs #{deploy_to}/current/scripts/unicorn.sh /etc/init.d/unicorn_myapp.sh"
+#                                                                  Restart task
+# ------------------------------------------------------------------------------
+  desc "Restart unicorn"
+  task :restart => :environment do
+    #invoke 'unicorn:stop'
+    #invoke 'unicorn:start'
+    queue 'echo "-----> Restart Unicorn"'
+    queue! %{
+      test -s #{unicorn_pid} && kill -s USR2 `cat #{unicorn_pid}` 
+      exit 0
+    }
   end
 end
+
+
 
 # For help in making your deploy script, see the Mina documentation:
 #
