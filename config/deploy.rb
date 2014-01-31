@@ -27,9 +27,9 @@ set :rvm_path, '/usr/local/rvm/bin/rvm'
 #   set :user, 'foobar'    # Username in the server to SSH to.
 #   set :port, '30000'     # SSH port number.
 
-set :app_path, "#{deploy_to}/#{current_path}"
-set :unicorn_config, "#{app_path}/config/unicorn.rb"
-set :unicorn_pid, "#{app_path}/tmp/pids/unicorn.pid"
+# set :app_path, "#{deploy_to}/#{current_path}"
+# set :unicorn_config, "#{app_path}/config/unicorn.rb"
+# set :unicorn_pid, "#{app_path}/tmp/pids/unicorn.pid"
 
 # This task is the environment that is loaded for most commands, such as
 # `mina deploy` or `mina rake`.
@@ -49,8 +49,8 @@ task :setup => :environment do
   queue! %[mkdir -p "#{deploy_to}/shared/log"]
   queue! %[chmod g+rx,u+rwx "#{deploy_to}/shared/log"]
 
-  queue! %[mkdir -p "#{deploy_to}/shared/tmp/{pids,sockets}"]
-  queue! %[chmod g+rx,u+rwx "#{deploy_to}/shared/tmp/{pids,sockets}"]
+  # queue! %[mkdir -p "#{deploy_to}/shared/tmp/{pids,sockets}"]
+  # queue! %[chmod g+rx,u+rwx "#{deploy_to}/shared/tmp/{pids,sockets}"]
 
   queue! %[mkdir -p "#{deploy_to}/shared/config"]
   queue! %[chmod g+rx,u+rwx "#{deploy_to}/shared/config"]
@@ -75,49 +75,12 @@ task :deploy => :environment do
 
     to :launch do
       #queue "touch #{deploy_to}/tmp/restart.txt"
-      invoke :'unicorn:restart'
+      #invoke :'unicorn:restart'
+      queue "restart activemenu"
     end
   end
 end
 
-#                                                                       Unicorn
-# ==============================================================================
-namespace :unicorn do
-#                                                                    Start task
-# ------------------------------------------------------------------------------
-  desc "Start unicorn"
-  task :start => :environment do
-    queue 'echo "-----> Start Unicorn"'
-    queue! %{
-      cd #{app_path}
-      RAILS_ENV=production bundle exec unicorn_rails -c #{unicorn_config} -D
-    }
-  end
- 
-#                                                                     Stop task
-# ------------------------------------------------------------------------------
-  desc "Stop unicorn"
-  task :stop do
-    queue 'echo "-----> Stop Unicorn"'
-    queue! %{
-      test -s #{unicorn_pid} && kill -QUIT `cat "#{unicorn_pid}"` && echo "\tStop Ok" && exit 0
-      echo >&2 "\tNot running"
-    }
-  end
- 
-#                                                                  Restart task
-# ------------------------------------------------------------------------------
-  desc "Restart unicorn"
-  task :restart => :environment do
-    #invoke 'unicorn:stop'
-    #invoke 'unicorn:start'
-    queue 'echo "-----> Restart Unicorn"'
-    queue! %{
-      test -s #{unicorn_pid} && kill -s USR2 `cat #{unicorn_pid}` 
-      exit 0
-    }
-  end
-end
 
 
 
