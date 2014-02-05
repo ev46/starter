@@ -50,6 +50,8 @@ task :setup => :environment do
 
   queue! %[touch "#{deploy_to}/shared/config/database.yml"]
   queue  %[echo "-----> Be sure to edit 'shared/config/database.yml'."]
+
+  queue %{export RBENV_ROOT=#{rbenv_path}}
 end
 
 desc "Deploys the current version to the server."
