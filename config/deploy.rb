@@ -20,7 +20,7 @@ set :ssh_options, '-A'
 
 # Manually create these paths in shared/ (eg: shared/config/database.yml) in your server.
 # They will be linked in the 'deploy:link_shared_paths' step.
-set :shared_paths, ['config/database.yml', 'log']
+set :shared_paths, ['config/database.yml', 'config/application.yml','log']
 set :rbenv_path, '/usr/local/rbenv'
 
 # Optional settings:
@@ -65,9 +65,9 @@ task :deploy => :environment do
     invoke :'rails:db_migrate'
     invoke :'rails:assets_precompile'
 
-    # to :launch do
-    #   queue "restart shopper"
-    # end
+    to :launch do
+      queue "restart starter"
+    end
   end
 end
 

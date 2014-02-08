@@ -42,6 +42,22 @@ Activemenu::Application.configure do
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
   # config.force_ssl = true
 
+  config.action_mailer.default_url_options = { :host => ENV['DOMAIN'] }
+
+  config.action_mailer.smtp_settings = {
+    # address: "smtp.gmail.com",
+    # port: 587,
+    # domain: "sellcloud.com",
+    # authentication: "plain",
+    # enable_starttls_auto: true,
+    # user_name: ENV["GMAIL_USERNAME"],
+    # password: ENV["GMAIL_PASSWORD"]
+    :address   => "smtp.mandrillapp.com",
+    :port      => 25,
+    :user_name => ENV["MANDRILL_USERNAME"],
+    :password  => ENV["MANDRILL_API_KEY"]
+  }
+
   # Set to :debug to see everything in the log.
   config.log_level = :info
 
